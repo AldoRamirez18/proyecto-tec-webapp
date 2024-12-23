@@ -1,0 +1,150 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FacadeService } from '../facade.service';
+import { AlumnosService } from '../alumnos.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { EliminarUserModalComponent } from 'src/app/modals/eliminar-user-modal/eliminar-user-modal.component';
+
+@Component({
+  selector: 'app-alumnos-screen',
+  templateUrl: './alumnos-screen.component.html',
+  styleUrls: ['./alumnos-screen.component.scss']
+})
+export class AlumnosScreenComponent  implements OnInit{
+  public name_user:string = "";
+  public rol:string = "";
+  public token : string = "";
+  public lista_alumnos: any[] = [];
+
+  //Para la tabla
+  displayedColumns: string[] = [];
+  dataSource = new MatTableDataSource<DatosUsuario>(this.lista_alumnos as DatosUsuario[]);
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  constructor(
+    public facadeService: FacadeService,
+    public alumnosService: AlumnosService,
+    private router: Router,
+    public dialog: MatDialog
+  ){}
+
+  ngOnInit(): void {
+    this.name_user = this.facadeService.getUserCompleteName();
+    this.rol = this.facadeService.getUserGroup();
+    //Validar que haya inicio de sesión
+    //Obtengo el token del login
+    this.token = this.facadeService.getSessionToken();
+    console.log("Token: ", this.token);
+    if(this.token == ""){
+      this.router.navigate([""]);
+    }
+    //Obtener alumnos
+    this.obtenerAlumnos();
+    //Para paginador
+    this.initPaginator();
+
+    // Mostrar Columnas
+    this.mostrarColumnas();
+  }
+
+  //Para paginación
+  public initPaginator(){
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+      //console.log("Paginator: ", this.dataSourceIngresos.paginator);
+      //Modificar etiquetas del paginador a español
+      this.paginator._intl.itemsPerPageLabel = 'Registros por página';
+      this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+        if (length === 0 || pageSize === 0) {
+          return `0 / ${length}`;
+        }
+        length = Math.max(length, 0);
+        const startIndex = page * pageSize;
+        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+        return `${startIndex + 1} - ${endIndex} de ${length}`;
+      };
+      this.paginator._intl.firstPageLabel = 'Primera página';
+      this.paginator._intl.lastPageLabel = 'Última página';
+      this.paginator._intl.previousPageLabel = 'Página anterior';
+      this.paginator._intl.nextPageLabel = 'Página siguiente';
+    },500);
+    //this.dataSourceIngresos.paginator = this.paginator;
+  }
+
+  //Obtener alumnos
+  public obtenerAlumnos(){
+    this.alumnosService.obtenerListaAlumnos().subscribe(
+      (response)=>{
+        this.lista_alumnos = response;
+        console.log("Lista users: ", this.lista_alumnos);
+        if(this.lista_alumnos.length > 0){
+          //Agregar datos del nombre e email
+          this.lista_alumnos.forEach(usuario => {
+            usuario.first_name = usuario.user.first_name;
+            usuario.last_name = usuario.user.last_name;
+            usuario.email = usuario.user.email;
+          });
+          console.log("Alumnos: ", this.lista_alumnos);
+
+          this.dataSource = new MatTableDataSource<DatosUsuario>(this.lista_alumnos as DatosUsuario[]);
+        }
+      }, (error)=>{
+        alert("No se pudo obtener la lista de alumnos");
+      }
+    );
+  }
+
+  public goEditar(idUser: number){
+    this.router.navigate(["registro-usuarios/alumno/"+idUser]);
+  }
+
+  public delete(idUser: number){
+    //console.log("User:", idUser);
+    const dialogRef = this.dialog.open(EliminarUserModalComponent,{
+      data: {id: idUser, rol: 'alumno'}, //Se pasan valores a través del componente
+      height: '288px',
+      width: '328px',
+    });
+    //Esta se ejecuta después de un evento que cierra el modal
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.isDelete){
+        console.log("Alumno eliminado");
+        //Recargar página
+        alert("Alumno eliminado correctamente");
+        window.location.reload();
+      }else{
+        alert("Alumno no eliminado ");
+        console.log("No se eliminó el alumno");
+      }
+    });
+  }
+
+  // Función Para mostrar o no las Columnas
+  public mostrarColumnas(){
+    if(this.rol == "administrador"){
+      this.displayedColumns = ['matricula', 'nombre', 'email', 'fecha_nacimiento', 'curp', 'rfc', 'telefono', 'editar', 'eliminar'];
+    }else if(this.rol == "maestro" || this.rol == "alumno"){
+      this.displayedColumns = ['matricula', 'nombre', 'email', 'fecha_nacimiento', 'curp', 'rfc', 'telefono'];
+    }
+  }
+}
+
+//Esto va fuera de la llave que cierra la clase
+export interface DatosUsuario {
+  id: number,
+  matricula: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  fecha_nacimiento: string,
+  curp: string,
+  rfc: string,
+  telefono: string,
+}

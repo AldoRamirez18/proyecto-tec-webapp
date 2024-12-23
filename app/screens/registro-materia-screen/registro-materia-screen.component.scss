@@ -1,0 +1,274 @@
+.wrapper{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+.section-registro{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.header-registro{
+  width: 100%;
+  height: 7vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #003B5C!important;
+}
+
+.title{
+  font-size: 28px;
+  font-family: Nexa-Bold;
+  text-align: center;
+  opacity: 1;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.icon-back{
+  padding-left: 1.5rem;
+  color: #FFFFFF;
+  font-size: 28pt;
+  width: 60px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.icon-forward{
+  color: #0092B8;
+}
+
+.body-registro{
+  width: 40%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 3.5rem;
+  gap: 1.5rem;
+}
+
+// Material Input
+mat-form-field{
+  width: 100%!important;
+  height: 48px!important;
+  text-align: left!important;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  text-align: left;
+  font-family: Nexa!important;
+  font-size: 13px;
+  letter-spacing: 0px;
+  color: #E84150 !important;
+  opacity: 1;
+}
+::ng-deep .mat-input-element{
+  text-align: left;
+  font-family: Nexa;
+  font-size: 16px;
+  letter-spacing: 0px;
+  opacity: 0.6;
+  color: #000000 !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #000000;
+  background-color: #FFFFFF;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #000000!important;
+}
+
+
+.title-dias{
+  font-size: 18px;
+  text-align: center;
+  font-family: Nexa-Bold;
+  letter-spacing: 2px;
+  color: #231F20;
+  opacity: 1;
+}
+
+.select-dias {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.checkbox-group{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.checkbox-item{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 70%;
+  margin-left: 5px;
+}
+
+.d-checkbox-nombre{
+  text-align: left;
+  font-family: Nexa;
+  font-size: 16px;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  margin-left: 10px;
+}
+
+::ng-deep .mdc-checkbox__background {
+  transform: scale(1.5);
+  background-color: #F6F4F5;
+  border: 1px solid #F6F4F5;
+}
+
+::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background, .mdc-checkbox__ripple {
+  background-color: #0092B8 !important;
+  border-color: #0092B8 !important;
+}
+
+// NGX Timepicker
+.time-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: flex-start;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible del elemento padre */
+}
+
+.ngx-time {
+  width: 100%; /* Asegura que ocupe todo el ancho del div sp */
+  padding: 0; /* Remueve cualquier padding interno que pueda afectar el ancho del input */
+  box-sizing: border-box; /* Asegura que el padding y border sean incluidos en el ancho y alto */
+}
+
+.ngx-time input {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  border: 2px solid #007BFF; /* Color de borde azul */
+  border-radius: 5px;
+  text-align: center;
+  background-color: #F8F9FA; /* Fondo gris claro */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box; /* Asegura que el padding y border sean incluidos en el ancho */
+}
+
+.ngx-time input:hover {
+  background-color: #E9ECEF; /* Fondo más oscuro al pasar el mouse */
+  border-color: #0056b3; /* Borde más oscuro al pasar el mouse */
+}
+
+::ng-deep ngx-material-timepicker-content {
+  --clock-hand-color: #9fbd90 !important;
+}
+
+::ng-deep .timepicker__header {
+  background-color: #008000 !important;
+}
+
+::ng-deep .timepicker__body {
+  background-color: #424242 !important;
+}
+
+::ng-deep .clock-face__number > span.active {
+  background-color: #008000 !important;
+}
+
+::ng-deep .clock-hand-color {
+  background-color: #008000 !important;
+}
+
+::ng-deep .clock-face {
+  background-color: #555 !important;
+}
+
+::ng-deep .clock-face__number > span {
+  color: #fff !important;
+}
+
+::ng-deep .clock-face__number--outer > span {
+  color: #fff !important;
+}
+
+::ng-deep .timepicker__actions {
+  background-color: #424242 !important;
+}
+
+::ng-deep.timepicker-button {
+  color: #fff !important;
+}
+
+// Botones
+.section-buttons{
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 3rem;
+}
+
+.btn-primary {
+  width: 208px;
+  height: 48px;
+  background-color: #0092B8!important;
+  border-color: #0092B8!important;
+  border-radius: 8px!important;
+  opacity: 1;
+  //Fuente
+  text-align: center;
+  font-family: Nexa-Bold;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.btn-primary:hover {
+  background-color: #017895!important;
+  border-color: #017895!important;
+
+}
+
+.btn-danger{
+  width: 208px;
+  height: 48px;
+  border-radius: 8px!important;
+  opacity: 1;
+  //Fuente
+  text-align: center;
+  font-family: Nexa-Bold;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  opacity: 1;
+}
